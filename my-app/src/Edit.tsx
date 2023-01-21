@@ -1,15 +1,15 @@
-import React ,{useState} from 'react'
+import React from 'react'
 import './Edit.css';
 import {useNavigate} from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import {useForm,SubmitHandler} from 'react-hook-form'
 
 function Edit(){
-    const [inputName,setInputName]=useState('')
-    const [inputAge,setInputAge]=useState(0)
-    const [inputHobby,setInputHobby]=useState('')
-    const [inputMajor,setInputMajor]=useState('')
-    const [inputMessage,setInputMessage]=useState('')
     const navigate = useNavigate()
-    const [profile,setProfile] = useState<Profile>()
+    const state = useLocation().state
+    const {register, handleSubmit,}=useForm<Profile>();
+
+    
     
     type Profile = {
         inputName:string;
@@ -19,35 +19,72 @@ function Edit(){
         inputMessage:string;
     }
 
-    const handleSubmit=(e: React.FormEvent<HTMLFormElement>)=>{
-        e.preventDefault()
-
-        const newProfile : Profile = {
-            inputName:inputName,
-            inputAge:inputAge,
-            inputHobby:inputHobby,
-            inputMajor:inputMajor,
-            inputMessage:inputMessage,
-        }
-        setProfile(newProfile)
-        console.log(newProfile)
+    const onSubmit:SubmitHandler<Profile>=(data)=>{
+        console.log(data)
+        navigate('/',{state:{data}})
     }
 
     return(
         <div className="self-introduction">
-            <form onSubmit={(e)=>{handleSubmit(e)}}>
-                <h1>プロフィール</h1>
-                <p>名前</p>
-                <input type='text' onChange={(e)=>{setInputName(e.target.value)}} className='inputName'></input>
-                <p>年齢</p>
-                <input type='number'onChange={(e)=>{setInputAge(e.target.valueAsNumber)}} className='inputAge'></input>
-                <p>趣味</p>
-                <input type='text'onChange={(e)=>{setInputHobby(e.target.value)}} className='inputHobby'></input>
-                <p>専攻</p>
-                <input type='text'onChange={(e)=>{setInputMajor(e.target.value)}} className='inputMajor'></input>
-                <h2>ひとこと</h2>
-                <textarea onChange={(e)=>{setInputMessage(e.target.value)}} className='inputMessage'></textarea>
-                <button type='submit' onClick={()=>{navigate('/',{state:{profile}})}}>更新</button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <h1 className="header">プロフィール</h1>
+                <div className='form'>
+                    <p>名前</p>
+                    <input 
+                        type='text' 
+                        {...register('inputName',{
+                            required:{
+                                value:true,
+                                message:'入力が必須の項目です。',
+                        }})}
+                        className='inputName'
+                        defaultValue={state.profile.inputName}
+                    />
+                    <p>年齢</p>
+                    <input 
+                        type='number'
+                        className='inputAge' 
+                        defaultValue={state.profile.inputAge}
+                        {...register('inputAge',{
+                        required:{
+                            value:true,
+                            message:'入力が必須の項目です。',
+                        }})}>
+                    </input>
+                    <p>趣味</p>
+                    <input 
+                        type='text'
+                        className='inputHobby' 
+                        defaultValue={state.profile.inputHobby}
+                        {...register('inputHobby',{
+                            required:{
+                                value:true,
+                                message:'入力が必須の項目です。',
+                        }})}>
+                        </input>
+                    <p>専攻</p>
+                    <input 
+                        type='text' 
+                        className='inputMajor' 
+                        defaultValue={state.profile.inputMajor}
+                        {...register('inputMajor',{
+                            required:{
+                                value:true,
+                                message:'入力が必須の項目です。',
+                        }})}></input>
+                    <h2>ひとこと</h2>
+                    <textarea  
+                        className='inputMessage' 
+                        defaultValue={state.profile.inputMessage}
+                        {...register('inputMessage',{
+                            required:{
+                                value:true,
+                                message:'入力が必須の項目です。',
+                        }})}>
+                        </textarea>
+                    <br/>
+                    <button>更新</button>
+                </div>
             </form>
         </div>
     )
