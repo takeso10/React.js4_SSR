@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 function App() {
   const navigate = useNavigate()
   const state = useLocation().state
-  console.log(state.data.inputName)
   const [profile,setProfile] = useState<Profile>(
     {inputName:"",
     inputAge:0,
@@ -23,11 +22,16 @@ function App() {
   }
 
   useEffect(()=>{
-    setProfile(state.data)
+    if(state===null){
+
+    }else{
+      setProfile(state.data)
+    }
   })
 
+
   function Edit(): void {
-    navigate('/Edit', { state: { profile } });
+    navigate('/React.js4_SSR/Edit', { state: { profile } });
   } 
 
   return (

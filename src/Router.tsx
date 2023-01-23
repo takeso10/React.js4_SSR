@@ -8,8 +8,8 @@ const Router=()=>{
         <BrowserRouter>
             <Routes>
                 <>
-                    <Route path='/' element={<App/>}></Route>
-                    <Route path='edit' element={<Edit/>}></Route>
+                    <Route path='/React.js4_SSR' element={<App/>}></Route>
+                    <Route path='/React.js4_SSR/edit' element={<Edit/>}></Route>
                 </>
             </Routes>
         </BrowserRouter>

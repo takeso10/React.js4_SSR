@@ -21,7 +21,7 @@ function Edit(){
 
     const onSubmit:SubmitHandler<Profile>=(data)=>{
         console.log(data)
-        navigate('/',{state:{data}})
+        navigate('/React.js4_SSR',{state:{data}})
     }
 
     return(
