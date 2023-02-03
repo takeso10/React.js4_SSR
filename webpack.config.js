@@ -18,7 +18,15 @@ module.exports = {
                     presets:["@babel/preset-env","@babel/preset-react"],
                     plugins: ['@babel/plugin-syntax-jsx']}
             }
-            }    
+            },
+            {
+                test:/\.css$/,
+                use:['style-loader','css-loader']
+            },
+            {
+                test: /\.tsx?$/,
+                loader: "ts-loader",
+              },    
         ],
     },
     resolve:{
