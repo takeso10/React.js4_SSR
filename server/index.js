@@ -1,28 +1,34 @@
+import Test from '../src/test'
+import express from "express"
+import ReactDOMServer from "react-dom/server"
+import React from 'react'
+//import Router from '../src/Router'
+//import App from '../src/App'
+/*
+const Router = require('../src/Router');
 const express = require('express')
-const app = express()
 const ReactDOMServer = require('react-dom/server')
-const path = require('path');
-const fs = require('fs')
-const Router =require('../src/Router.tsx')
-const PORT = process.env.PORT || 8000
-
+*/
+const app = express()
+const PORT = 8000;
+app.use(express.static('../dist'))
 app.get('/',(req,res)=>{
-  const app = ReactDOMServer.renderToString(<Router />)
+  const app = ReactDOMServer.renderToString(<Test/>);
 
   const html = `
     <html lang="en">
       <head>
-          <script src="client.js" async defer></script>
+        <script src="index.js" type="text/javascript"></script>
       </head>
       <body>
-          <div id="root">${app}</div>
+        <div id="root">${app}</div>
       </body>
     </html>
   `;
-   res.send(html);
+  res.send(html);
 })
 
-app.ude(express.static('./server'))
+
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

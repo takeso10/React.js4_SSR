@@ -1,4 +1,4 @@
-import React ,{useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
 import {useNavigate} from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
@@ -21,6 +21,7 @@ function App() {
     inputMessage:string;
   }
 
+  
   useEffect(()=>{
     if(state===null){
 
@@ -28,21 +29,26 @@ function App() {
       setProfile(state.data)
     }
   })
+  
+  
+  
 
-
+  
   function Edit(): void {
     navigate('/React.js4_SSR/Edit', { state: { profile } });
   } 
+  
+  
 
   return (
     <div className="self-introduction">
-      <h1 className="header">プロフィール</h1>
+      <h2 className="header">プロフィール</h2>
       <div className='form'>
-        <h2 className="name">名前：{profile.inputName}</h2>
+        <h3 className="name">名前：{profile.inputName}</h3>
         <p >年齢：{profile.inputAge}</p>
         <p>趣味：{profile.inputHobby}</p>
         <p>専攻：{profile.inputMajor}</p>
-        <h2>ひとこと</h2>
+        <h3>ひとこと</h3>
         <p>{profile.inputMessage}</p>
         <button type='submit' onClick={Edit}>編集</button>
       </div>

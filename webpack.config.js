@@ -3,34 +3,36 @@ const path = require('path');
 module.exports = {
     target:'node',
     mode : 'production',
-    entry:'./src/server/index.js',
+    entry:'./server/index.js',
     output: {
         path:path.resolve(__dirname+'/dist'),
-        filename:'sample.js'
+        filename:'./server.js'
     },
     module:{
         rules:[
-            {test:/\.js[x]?$/,
-            exclude:/node_modules/,
-            use:{
-                loader:'babel-loader',
-                options:{
-                    presets:["@babel/preset-env","@babel/preset-react"],
-                    plugins: ['@babel/plugin-syntax-jsx']}
-            }
+            {
+                test: /\.ts[x]?$/,
+                exclude:/node_modules/,
+                loader: "ts-loader",
+            }, 
+            {
+                test:/\.js[x]?$/,
+                exclude:/node_modules/,
+                use:{
+                    loader:'babel-loader',
+                    options:{
+                        presets:["@babel/preset-env","@babel/preset-react","@babel/preset-typescript"],
+                        plugins: ['@babel/plugin-syntax-jsx']}
+                }
             },
             {
                 test:/\.css$/,
                 use:['style-loader','css-loader']
             },
-            {
-                test: /\.tsx?$/,
-                loader: "ts-loader",
-              },    
         ],
     },
     resolve:{
-        extensions:['.js','.jsx','.json','tsx','html'],
+        extensions:['.js','.jsx','.json','.tsx','.css'],
         fallback:{
             http:require.resolve("stream-http"),
             url: require.resolve("url/"),
